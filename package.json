@@ -1,10 +1,10 @@
 {
-  "name": "server",
+  "name": "fridge-savant-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "Jest",
+    "test": "jest --coverage",
     "start": "nodemon app.js"
   },
   "keywords": [],
