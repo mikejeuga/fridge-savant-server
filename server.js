@@ -14,6 +14,10 @@ app.get("/", (req, res) => res.send("Hello"))
 //Routes
 app.use('/api/users', require('./routers/users'));
 
+
 const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => console.log(`server started at ${PORT}`))
+
+
+module.exports = app;
