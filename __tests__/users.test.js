@@ -1,7 +1,13 @@
-const generatePasswordHash = require('../auth/generatePasswordHash')
-const bcrypt = require('bcryptjs')
-const request = require('supertest')
-const app = require('../server')
+const dbHandler = require('../db-handler');
+const generatePasswordHash = require('../auth/generatePasswordHash');
+const bcrypt = require('bcryptjs');
+const request = require('supertest');
+const app = require('../app');
+
+
+beforeAll(async () => await dbHandler.connect());
+afterEach(async () => await dbHandler.clearDatabase());
+afterAll(async () => await dbHandler.closeDatabase());
 
 
 describe('generatePasswordHash', ()=> {
@@ -67,14 +73,25 @@ describe('Signing up a user', ()=>{
 
 describe("Getting the user information (Login ?)", ()=>{
   it('should send the user information back', async ()=> {
+    await request(app).post('/api/users').send({
+      "name": "test-name",
+      "email": "test@name.com",
+      "password": "123451"
+  }) 
+
     await request(app).get('/api/users').send({
-      "email": "test2@name.com",
-      "password": "123456"
+      "email": "test@name.com",
+      "password": "123451"
   })
   .expect(200)
 })
 
 it('should send an error if no email provided', async ()=> {
+  await request(app).post('/api/users').send({
+    "name": "test-name",
+    "email": "test@name.com",
+    "password": "123456"
+})
   await request(app).get('/api/users').send({
     "password": "123456"
 })
@@ -82,6 +99,12 @@ it('should send an error if no email provided', async ()=> {
 })
 
 it('should send an error if no password provided', async ()=> {
+  await request(app).post('/api/users').send({
+    "name": "test-name",
+    "email": "test@name.com",
+    "password": "123456"
+})
+
   await request(app).get('/api/users').send({
     "email": "test2@name.com"
 })
@@ -89,14 +112,24 @@ it('should send an error if no password provided', async ()=> {
 })
 
   it('should send a 500 error the user password is incorrect', async ()=> {
+    await request(app).post('/api/users').send({
+      "name": "test-name",
+      "email": "test@name.com",
+      "password": "123456"
+  })
     await request(app).get('/api/users').send({
-      "email": "test2@name.com",
+      "email": "test@name.com",
       "password": "145006"
   })
   .expect(500)
   })
 
   it('should send a 500 error if the user email is incorrect', async ()=> {
+    await request(app).post('/api/users').send({
+      "name": "test-name",
+      "email": "test@name.com",
+      "password": "123456"
+  })
     await request(app).get('/api/users').send({
       "email": "tes@name.com",
       "password": "123456"
