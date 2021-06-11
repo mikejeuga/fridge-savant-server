@@ -14,6 +14,6 @@ app.get("/", (req, res) => res.send("Hello"))
 //Routes
 app.use('/api/users', require('./routers/users'));
 
-// app.listen(PORT, () => console.log(`server started at ${PORT}`))
+app.listen(PORT, () => console.log(`server started at ${PORT}`))
 
 module.exports = app;
