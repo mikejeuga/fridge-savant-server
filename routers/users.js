@@ -20,7 +20,7 @@ router.post('/', [
         return res.status(400).json({errors: errors.array() });
     }
 
-    const {name, email, password } = req.body;
+    const {name, username,  email, password } = req.body;
 
     try {
         let user = await User.findOne({email})
@@ -31,12 +31,12 @@ router.post('/', [
 
         user = new User({
             name,
+            username,
             email,
             password: await generatePasswordHash(password)
         });
 
         await user.save()
-
         res.send(`${user.name} saved`)
 
     } catch (error) {
@@ -47,9 +47,7 @@ router.post('/', [
 });
 
 
-
-
-router.get('/', [
+router.post('/login', [
     check('email', 'Please include a valide email').isEmail(),
     check('password', 'Password is required').exists()],
      async (req, res) => {
@@ -75,7 +73,9 @@ router.get('/', [
             return user.status(400).json({msg: 'Invalid password.'})
         }
 
-        res.send(user)
+        req.session.userid = user.id
+        let data = await res.json(req.session.userid)
+        console.log(data)
 
     } catch (error) {
         console.log(error.message)
