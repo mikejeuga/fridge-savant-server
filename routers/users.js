@@ -1,14 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const config = require('config')
+const auth = require('../auth/auth')
 const generatePasswordHash = require('../auth/generatePasswordHash')
 const { check, validationResult } = require('express-validator');
 
 
 const User = require('../models/User')
 
+router.get('/', auth, async (req, res)=> {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user)
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error');
+    }
+})
 
-router.post('/', [
+
+router.post('/signup', [
     check('name', 'Your name is required')
     .not()
     .isEmpty(),
@@ -37,7 +50,18 @@ router.post('/', [
         });
 
         await user.save()
-        res.send(`${user.name} saved`)
+        const payload = {
+            user: {
+                id: user.id
+            }
+        }
+
+        jwt.sign(payload, config.get('jwtSecret'), {
+            expiresIn: 3600000
+        }, (err, token)=> {
+            if(err) throw err;
+            res.json({userId: user.id, name: user.name, token: token})
+        })
 
     } catch (error) {
         console.log(error.message)
@@ -73,9 +97,18 @@ router.post('/login', [
             return user.status(400).json({msg: 'Invalid password.'})
         }
 
-        req.session.userid = user.id
-        let data = await res.json(req.session.userid)
-        console.log(data)
+        const payload = {
+            user: {
+                id: user.id
+            }
+        }
+
+        jwt.sign(payload, config.get('jwtSecret'), {
+            expiresIn: 3600000
+        }, (err, token)=> {
+            if(err) throw err;
+            res.json({userId: user.id, name: user.name, token: token})
+        })
 
     } catch (error) {
         console.log(error.message)

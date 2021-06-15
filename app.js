@@ -16,20 +16,7 @@ app.use(express.json({extended: false}))
 
 app.use(corsMiddleware)
 
-const store = new MongoDBSession({
-    uri: db,
-    collection: 'sessions'
-})
 
-app.use(session({
-    secret: 'mydirtysecret',
-    resave: false,
-    saveUninitialized: false,
-    store: store,
-    cookie : {
-        maxAge: 1000 * 60 * 60 * 24
-    }
-}))
 
 app.get("/", (req, res) => {
     console.log(res.cookies)
