@@ -167,7 +167,7 @@ describe('GET api/users', ()=>{
   .expect(200)
 })
 
-it('should send a 401 erro for no token provided', async ()=>{
+it('should send a 401 error for no token provided', async ()=>{
   
   await request(app).post('/api/users/signup').send({
     "name": "test-name",
