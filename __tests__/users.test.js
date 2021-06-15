@@ -2,7 +2,9 @@ const dbHandler = require('../db-handler');
 const generatePasswordHash = require('../auth/generatePasswordHash');
 const bcrypt = require('bcryptjs');
 const request = require('supertest');
+const jwt = require('jsonwebtoken')
 const app = require('../app');
+const auth = require('../auth/auth');
 
 
 beforeAll(async () => await dbHandler.connect());
@@ -20,7 +22,7 @@ describe('generatePasswordHash', ()=> {
 });
 
 
-describe('Signing up a user', ()=>{
+describe('POST   /api/users/signin', ()=>{
   it('should send a json file with user informations to the db', async () =>{
     await request(app).post('/api/users/signup').send({
       "name": "test-name",
@@ -72,7 +74,7 @@ describe('Signing up a user', ()=>{
 
 
 
-describe("Loging in the user", ()=>{
+describe("POST /api/users/lgoin", ()=>{
   it('should send the user information back', async ()=> {
     await request(app).post('/api/users/signup').send({
       "name": "test-name",
@@ -139,47 +141,3 @@ it('should send an error if no password provided', async ()=> {
   })
 
 })
-
-
-describe("Getting the user from db", ()=> {
-
-  var auth = {};
-  before(loginUser(auth));
-
-  it('should get a user back from the db', async ()=>{
-    await request(app).post('/api/users/signup').send({
-      "name": "test-name",
-      "email": "test@name.com",
-      "password": "123451"
-  })
-
-    await request(app).post('/api/users/login').send({
-      "email": "test@name.com",
-      "password": "123451"
-  })
-  
-  await request(app).get('/api/users/')
-  .set('Authorization', 'bearer ' + token)
-  .expect(200)
-  })
-})
-
-
-const loginUser = (auth) => {
-  return function(done) {
-      request
-          .post('/auth/local')
-          .send({
-              email: 'test@test.com',
-              password: 'test'
-          })
-          .expect(200)
-          .end(onResponse);
-
-      function onResponse(err, res) {
-          auth.token = res.body.token;
-          return done();
-      }
-  };
-
-}

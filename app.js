@@ -1,6 +1,4 @@
 const express = require('express')
-const session = require('express-session')
-const MongoDBSession = require('connect-mongodb-session')(session)
 const config = require('config')
 const db = config.get('mongoURI')
 const corsMiddleware = require('./cors')
@@ -19,8 +17,6 @@ app.use(corsMiddleware)
 
 
 app.get("/", (req, res) => {
-    console.log(res.cookies)
-    res.send("Hello")
 })
 //Routes
 app.use('/api/users', require('./routers/users'));
