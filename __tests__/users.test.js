@@ -148,13 +148,13 @@ it('should send an error if no password provided', async ()=> {
 describe('GET api/users', ()=>{
  it('should send a user back', async ()=>{
   
-  await request(app).post('/api/users/signup').send({
+  const req = await request(app).post('/api/users/signup').send({
     "name": "test-name",
     "email": "test@name.com",
     "password": "123451"
 })
 
-  const req = await request(app).post('/api/users/login').send({
+  await request(app).post('/api/users/login').send({
     "email": "test@name.com",
     "password": "123451"
 })
