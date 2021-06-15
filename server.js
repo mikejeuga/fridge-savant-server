@@ -1,3 +1,10 @@
 const app = require('./app')
 const connectDB = require('./config/db')
-connectDB()
+
+const init = async () => {
+  const connected = await connectDB()
+
+  console.log("started")
+}
+
+init()
