@@ -1,6 +1,4 @@
 const express = require('express')
-const session = require('express-session')
-const MongoDBSession = require('connect-mongodb-session')(session)
 const config = require('config')
 const db = config.get('mongoURI')
 const corsMiddleware = require('./cors')
@@ -25,6 +23,6 @@ app.get("/", (req, res) => {
 //Routes
 app.use('/api/users', require('./routers/users'));
 
-app.listen(PORT, () => console.log(`server started at ${PORT}`))
+// app.listen(PORT, () => console.log(`server started at ${PORT}`))
 
 module.exports = app;
