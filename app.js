@@ -1,6 +1,6 @@
 const express = require('express')
-const config = require('config')
-const db = config.get('mongoURI')
+// const config = require('config')
+// const db = config.get('mongoURI')
 const corsMiddleware = require('./cors')
 const app = express()
 
@@ -17,6 +17,7 @@ app.use(corsMiddleware)
 
 
 app.get("/", (req, res) => {
+    // res.send("yo")
 })
 //Routes
 app.use('/api/users', require('./routers/users'));
@@ -24,6 +25,6 @@ app.use('/api/users', require('./routers/users'));
 
 
 
-app.listen(PORT, () => console.log(`server started at ${PORT}`))
+// app.listen(PORT, () => console.log(`server started at ${PORT}`))
 
 module.exports = app;

@@ -3,8 +3,10 @@ const generatePasswordHash = require('../auth/generatePasswordHash');
 const bcrypt = require('bcryptjs');
 const request = require('supertest');
 const jwt = require('jsonwebtoken')
+const config = require('config')
 const app = require('../app');
 const auth = require('../auth/auth');
+const { deleteOne } = require('../models/User');
 
 
 beforeAll(async () => await dbHandler.connect());
@@ -22,7 +24,7 @@ describe('generatePasswordHash', ()=> {
 });
 
 
-describe('POST   /api/users/signin', ()=>{
+describe('POST   /api/users/signup', ()=>{
   it('should send a json file with user informations to the db', async () =>{
     await request(app).post('/api/users/signup').send({
       "name": "test-name",
@@ -141,3 +143,69 @@ it('should send an error if no password provided', async ()=> {
   })
 
 })
+
+
+describe('GET api/users', ()=>{
+ it('should send a user back', async ()=>{
+  
+  await request(app).post('/api/users/signup').send({
+    "name": "test-name",
+    "email": "test@name.com",
+    "password": "123451"
+})
+
+  const req = await request(app).post('/api/users/login').send({
+    "email": "test@name.com",
+    "password": "123451"
+})
+
+ let token = req.body.token
+
+ const res = await request(app).get('/api/users/')
+  .set('authorization', token)
+  .set('content-Type',  'application/json')
+  .expect(200)
+})
+
+it('should send a 401 erro for no token provided', async ()=>{
+  
+  await request(app).post('/api/users/signup').send({
+    "name": "test-name",
+    "email": "test@name.com",
+    "password": "123451"
+})
+
+  await request(app).post('/api/users/login').send({
+    "email": "test@name.com",
+    "password": "123451"
+})
+
+
+ const res = await request(app).get('/api/users/')
+  .set('authorization', '')
+  .set('content-Type',  'application/json')
+  .expect(401)
+})
+
+it('should send a 401 error for unvalid', async ()=>{
+  
+  const req = await request(app).post('/api/users/signup').send({
+    "name": "test-name",
+    "email": "test@name.com",
+    "password": "123451"
+})
+ let token = req.body.token.slice(0,req.body.token.length - 2 )
+
+  await request(app).post('/api/users/login').send({
+    "email": "test@name.com",
+    "password": "123451"
+})
+
+
+ const res = await request(app).get('/api/users/')
+  .set('authorization', token)
+  .set('content-Type',  'application/json')
+  .expect(401)
+})
+
+ })
