@@ -1,14 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const config = require('config')
+const auth = require('../auth/auth')
 const generatePasswordHash = require('../auth/generatePasswordHash')
 const { check, validationResult } = require('express-validator');
 
 
 const User = require('../models/User')
 
+router.get('/', auth, async (req, res)=> {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user)
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error');
+    }
+})
 
-router.post('/', [
+
+router.post('/signup', [
     check('name', 'Your name is required')
     .not()
     .isEmpty(),
@@ -20,7 +33,7 @@ router.post('/', [
         return res.status(400).json({errors: errors.array() });
     }
 
-    const {name, email, password } = req.body;
+    const {name, username,  email, password } = req.body;
 
     try {
         let user = await User.findOne({email})
@@ -31,13 +44,24 @@ router.post('/', [
 
         user = new User({
             name,
+            username,
             email,
             password: await generatePasswordHash(password)
         });
 
         await user.save()
+        const payload = {
+            user: {
+                id: user.id
+            }
+        }
 
-        res.send(`${user.name} saved`)
+        jwt.sign(payload, config.get('jwtSecret'), {
+            expiresIn: 3600000
+        }, (err, token)=> {
+            if(err) throw err;
+            res.json({userId: user.id, name: user.name, token: token})
+        })
 
     } catch (error) {
         console.log(error.message)
@@ -47,9 +71,7 @@ router.post('/', [
 });
 
 
-
-
-router.get('/', [
+router.post('/login', [
     check('email', 'Please include a valide email').isEmail(),
     check('password', 'Password is required').exists()],
      async (req, res) => {
@@ -75,7 +97,18 @@ router.get('/', [
             return user.status(400).json({msg: 'Invalid password.'})
         }
 
-        res.send(user)
+        const payload = {
+            user: {
+                id: user.id
+            }
+        }
+
+        jwt.sign(payload, config.get('jwtSecret'), {
+            expiresIn: 3600000
+        }, (err, token)=> {
+            if(err) throw err;
+            res.json({userId: user.id, name: user.name, token: token})
+        })
 
     } catch (error) {
         console.log(error.message)
