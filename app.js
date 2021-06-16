@@ -21,10 +21,11 @@ app.get("/", (req, res) => {
 })
 //Routes
 app.use('/api/users', require('./routers/users'));
+app.use('/api/bookmarks', require('./routers/bookmarks'))
 
 
 
 
-// app.listen(PORT, () => console.log(`server started at ${PORT}`))
+app.listen(PORT, () => console.log(`server started at ${PORT}`))
 
 module.exports = app;
