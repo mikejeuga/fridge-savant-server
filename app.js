@@ -1,6 +1,4 @@
 const express = require('express')
-// const config = require('config')
-// const db = config.get('mongoURI')
 const corsMiddleware = require('./cors')
 const app = express()
 
@@ -14,10 +12,9 @@ app.use(express.json({extended: false}))
 
 app.use(corsMiddleware)
 
-
-
 app.get("/", (req, res) => {
-    // res.send("yo")
+
+    res.send("Hello")
 })
 //Routes
 app.use('/api/users', require('./routers/users'));

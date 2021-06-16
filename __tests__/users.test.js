@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const app = require('../app');
 const auth = require('../auth/auth');
-const { deleteOne } = require('../models/User');
+const User = require('../models/User');
 
 beforeAll(async () => await dbHandler.connect());
 afterEach(async () => await dbHandler.clearDatabase());
@@ -138,7 +138,7 @@ describe('POST /api/users/login', () => {
         email: 'test@name.com',
         password: '145006',
       })
-      .expect(500);
+      .expect(400);
   });
 
   it('should send a 500 error if the user email is incorrect', async () => {
@@ -153,7 +153,7 @@ describe('POST /api/users/login', () => {
         email: 'tes@name.com',
         password: '123456',
       })
-      .expect(500);
+      .expect(400);
   });
 });
 

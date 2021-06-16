@@ -18,23 +18,18 @@ router.get('/', auth, async (req, res) => {
 
 router.post(
   '/',
-  [
-    auth,
-    check('recipeId', 'The Id of the recipes is required.').not().isEmpty(),
-  ],
+  auth,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { recipeId, recipeTitle, recipeBody } = req.body;
+    const { recipe } = req.body;
 
     try {
       const newBookmark = new Bookmark({
-        recipeId,
-        recipeTitle,
-        recipeBody,
+        recipe,
         user: req.user.id,
       });
 

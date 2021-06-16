@@ -40,7 +40,7 @@ router.post(
       let user = await User.findOne({ email });
 
       if (user) {
-        return user.status(400).json({ msg: 'This user already exists.' });
+        return res.status(400).json({ msg: 'This user already exists.' });
       }
 
       user = new User({
@@ -93,13 +93,13 @@ router.post(
       let user = await User.findOne({ email });
 
       if (!user) {
-        return user.status(400).json({ msg: 'Invalid email.' });
+        return res.status(400).json({ msg: 'Invalid email.' });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return user.status(400).json({ msg: 'Invalid password.' });
+        return res.status(400).json({ msg: 'Invalid password.' });
       }
 
       const payload = {
