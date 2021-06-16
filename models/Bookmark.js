@@ -6,23 +6,10 @@ const BookmarkSchema = mongoose.Schema({
     ref: 'users',
   },
 
-  recipeId: {
-    type: String,
-    required: false,
-    unique: true,
-  },
-
-  recipeTitle: {
-    type: String,
-  },
-
-  recipeBody: {
-    type: String,
-  },
-
-  recipeImage: {
-    type: String,
-  },
+  recipe: {
+    type: JSON
+    }
+  
 });
 
 module.exports = mongoose.model('bookmark', BookmarkSchema);
