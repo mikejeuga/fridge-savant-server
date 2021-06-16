@@ -9,9 +9,6 @@
 // const User = require('../models/User');
 // const Bookmark = require('../models/Bookmark')
 
-
 // beforeAll(async () => await dbHandler.connect());
 // afterEach(async () => await dbHandler.clearDatabase());
 // afterAll(async () => await dbHandler.closeDatabase());
-
-
