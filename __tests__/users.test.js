@@ -21,7 +21,7 @@ describe('generatePasswordHash', () => {
 });
 
 describe('POST   /api/users/signup', () => {
-  it('should send a json file with user informations to the db', async () => {
+  it('should send a json file with user information to the db', async () => {
     await request(app)
       .post('/api/users/signup')
       .send({
@@ -62,7 +62,7 @@ describe('POST   /api/users/signup', () => {
       .expect(404);
   });
 
-  it('should send a 500 bad request error if User already exist', async () => {
+  it('should send a 500 bad request error if User already exists', async () => {
     await request(app).post('/api/users/signup').send({
       name: 'test2-name',
       email: 'test2@name.com',
@@ -198,7 +198,7 @@ describe('GET api/users', () => {
       .expect(401);
   });
 
-  it('should send a 401 error for unvalid', async () => {
+  it('should send a 401 error for invalid', async () => {
     const req = await request(app).post('/api/users/signup').send({
       name: 'test-name',
       email: 'test@name.com',
