@@ -25,13 +25,15 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { recipe } = req.body;
+    const { recipeId } = req.body;
 
     try {
       const newBookmark = new Bookmark({
-        recipe,
+        recipeId,
         user: req.user.id,
       });
+
+      console.log(newBookmark)
 
       const bookmark = await newBookmark.save();
       res.json(bookmark);
