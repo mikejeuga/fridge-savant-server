@@ -9,7 +9,7 @@ const Bookmark = require('../models/Bookmark');
 router.get('/', auth, async (req, res) => {
   try {
     const bookmarks = await Bookmark.find({ user: req.user.id });
-    res.json(bookmarks);
+    res.json(bookmarks.map(bookmark => bookmark.recipeId));
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Server Error');
