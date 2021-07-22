@@ -1,6 +1,6 @@
 <img src="public/assets/images/Copy%20of%20Fridge%20Savant%20Logo%20Horizontal.gif" alt="logo" width="850" />
 
-Meet the [Team](#team) || Our [Tech Stack](#tech-stack) || [Run](#Running the server-side application) the server
+Meet the [Team](#team) || Our [Tech Stack](#tech-stack) || [Run](#Run) the server
 
 ----------------------------------------
 ## About
@@ -14,7 +14,7 @@ The team made the decision to have a very common client-server type architecture
 As you are reading information here about the server side of the application, you will also have to run the client side written in React.
 You can find the client-side application [here](https://github.com/jasonrowsell/fridge-savant-client).
 
-#### Running the server-side application
+#### Run
 ```
 $ git clone git@github.com:mikejeuga/fridge-savant-server.git
 $ cd fridge-savant-server
