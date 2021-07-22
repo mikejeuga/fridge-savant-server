@@ -22,6 +22,8 @@ $ npm run server
 ```
 Navigate on port:[5000](http://localhost:5000).
 
+[![Build Status](https://travis-ci.com/mikejeuga/fridge-savant-server.svg?branch=main)](https://travis-ci.com/mikejeuga/fridge-savant-server)
+
 ----------------------------------------
 ## Tech Stack
 ----------------------------------------
