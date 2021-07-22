@@ -20,7 +20,7 @@ $ git clone git@github.com:mikejeuga/fridge-savant-server.git
 $ cd fridge-savant-server
 $ npm run server
 ```
-The application runs then on localhost @ port [5000](http://localhost:5000).
+Navigate on port:[5000](http://localhost:5000).
 
 ----------------------------------------
 ## Tech Stack
@@ -47,6 +47,44 @@ Server side:
 
 ### User stories
 ```
+As a User
+So that I can find new recipes,
+I want to be able to list the ingredients from my fridge.
+```
+```
+As a User
+So that I can find more recipes,
+I want to be able to add ingredients to my existing list.
+```
+
+```
+As a User
+So that I can refine my recipe search,
+I want to be able to remove ingredients from my existing list.
+```
+
+```
+As a User
+So that I can have tailored experience,
+I want to be able to have a personal profile.
+```
+
+```
+As a User
+So that I can be social,
+I want to be able to share recipes on social media platforms.
+```
+
+```
+As a User
+So that I don't have to search again a recipe,
+I want to be able to bookmark my favourite dishes.
+```
+
+```
+As a User
+So that I can have cook quickly or share again,
+I want to be able to see my favourite dishes.
 ```
 
 ### Diagrams
