@@ -1,6 +1,6 @@
 <img src="public/assets/images/Copy%20of%20Fridge%20Savant%20Logo%20Horizontal.gif" alt="logo" width="850" />
 
-Meet the [Team](#team) || Our [Tech Stack](#tech-stack) || [Run](#Run) the server
+[About](#About) || [Run](#Run) the server || Our [Tech Stack](#tech-stack) || Meet the [Team](#team)
 
 ----------------------------------------
 ## About
