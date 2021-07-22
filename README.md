@@ -3,12 +3,12 @@
 Meet the [Team](#team) || Our [Tech Stack](#tech-stack)
 
 ----------------------------------------
-## About Fridge Savant
+## About
 ----------------------------------------
 <p> Designed to inspire creativity in the kitchen when your fridge looks bare, the app makes decision making easier when it comes to meal times. By encouraging you to use up the ingredients you have to hand, Fridge Savant helps you to reduce food waste, and so manage your budget better. </p>
 
 ----------------------------------------
-## Application Set-up
+## Set-up
 ----------------------------------------
 The team made the decision to have a very common client-server type architecture. 
 As you are reading information here about the server side of the application, you will also have to run the client side written in React.
@@ -86,4 +86,4 @@ Server side:
 - Jason Rowsell | [GitHub](https://github.com/jasonrowsell)
 - Finn Williamson | [GitHub](https://github.com/fwill22)
 
-[Top](#About Fridge Savant)
+[Top](#About)
