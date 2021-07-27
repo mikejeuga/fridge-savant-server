@@ -110,7 +110,7 @@ I want to be able to see my favourite dishes.
 ----------------------------------------
 - Make the best out of what is left in the fridge.
 - Learn a new tech stack (MERN) as we build.
-- kepping a 95% test coverage.
+- Keeping a 95% test coverage.
 - Have fun
 
 
